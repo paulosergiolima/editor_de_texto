@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1716325738 source:c:\users\paulo.sc.lima_unesp\documents\editor_de_texto\structure.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"structure.h"
+
+1716325601 c:\users\paulo.sc.lima_unesp\documents\editor_de_texto\structure.h
+
+1716325891 source:c:\users\paulo.sc.lima_unesp\documents\editor_de_texto\main.c
+	<conio.h>
+	"structure.h"
+
