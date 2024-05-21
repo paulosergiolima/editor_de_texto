@@ -14,7 +14,7 @@ typedef struct{
 }STRING;
 
 typedef struct l{
-    unsigned int count;
+    unsigned int number;
     STRING *text;
     struct l *next;
     struct l *previous;
@@ -25,11 +25,23 @@ typedef struct{
     LINE *line;
 }CURSOR;
 
+typedef struct{
+    unsigned int size;
+    LINE *first;
+    LINE *last;
+}DESCRITOR;
+
+//inicializar
 void initializeString(STRING *string);
 void initializeLine(LINE *line);
 void initializeCursor(CURSOR *cursor,LINE *line);
+void initializeFile(DESCRITOR *descritor);
+
+//insercao e remocao
 void insertCharacterCursor(CURSOR *cursor,char value);
 void removeCharacter(CURSOR *cursor);
+
+//movimento
 void moveLeft(CURSOR *cursor);
 void moveRight(CURSOR *cursor);
 

@@ -8,6 +8,9 @@ int main()
     CURSOR cursor;
     initializeCursor(&cursor,&lines);
 
+    DESCRITOR descritor;
+    initializeDescritor(&descritor,&lines);
+
     //variaveis temporarias(debug ou placeholder)
     char on = 1;
     char flagLine = 1;

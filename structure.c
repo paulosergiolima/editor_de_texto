@@ -35,8 +35,6 @@
 #include <conio.h>
 #include "structure.h"
 
-#define LINE_MAX_SIZE 70//baseado no meu word
-
 //definicao dos tipos
 
 
@@ -51,7 +49,7 @@ void initializeString(STRING *string)
 
 void initializeLine(LINE *line)
 {
-    line->count = 1;
+    line->number = 1;
     line->next = NULL;
     line->previous = NULL;
     line->text = (STRING*)malloc(sizeof(STRING));
@@ -65,6 +63,13 @@ void initializeCursor(CURSOR *cursor,LINE *line)
 {
     cursor->line = line;
     cursor->character = NULL;
+}
+
+void initializeDescritor(DESCRITOR *file,LINE *line)
+{
+    file->size = 1;
+    file->first = line;
+    file->last = line;
 }
 
 //funcoes de insercao
