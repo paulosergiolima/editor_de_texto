@@ -65,14 +65,72 @@ void initializeCursor(CURSOR *cursor,LINE *line)
     cursor->character = NULL;
 }
 
-void initializeDescritor(DESCRITOR *file,LINE *line)
+void initializeDescritor(DESCRITOR *descritor,LINE *line)
 {
-    file->size = 1;
-    file->first = line;
-    file->last = line;
+    descritor->size = 1;
+    descritor->first = line;
+    descritor->last = line;
 }
 
 //funcoes de insercao
+
+void insertLineCursor(CURSOR *cursor,DESCRITOR *descritor)
+{
+    //Nao sei como manter o valor da linha (tipo linha 1, linha 2 e etc) certo.
+
+    LINE *new_line = (LINE*)malloc(sizeof(LINE));
+    initializeLine(new_line);
+
+    //confere se o cursor esta antes do primeiro caractere
+    if(cursor->character == NULL)
+    {
+        //confere se a linha do cursor for a primeira
+        if(descritor->first == cursor->line)
+        {
+            descritor->first = new_line;
+            new_line->next = cursor->line;
+            cursor->line->previous = new_line;
+        }
+        //a linha do cursor nao e a primeira
+        else
+        {
+            cursor->line->previous->next = new_line;
+            new_line->previous = cursor->line->previous;
+            new_line->next = cursor->line;
+            cursor->line->previous = new_line;
+        }
+    }
+    //confere se o cursor esta no ultimo caractere
+    else if(cursor->line->text->last == cursor->character)
+    {
+        //confere se a linha do cursor for a ultima
+        if(descritor->last == cursor->line)
+        {
+            descritor->last = new_line;
+        }
+        new_line->previous = cursor->line;
+        cursor->line->next = new_line;
+        cursor->line = new_line;
+        cursor->character = NULL;
+    }
+    //o cursor esta entre caracteres
+    else
+    {
+        new_line->previous = cursor->line;
+        cursor->line->next = new_line;
+        new_line->text->first = cursor->character->next;
+        cursor->character->next->previous = NULL;
+        cursor->character->next = NULL;
+        //Acha o ultimo caractere
+        unsigned int aux = 0;
+        for(CHARACTER *pointer = cursor->line->text->first; pointer != NULL; pointer = pointer->next) aux++;
+        new_line->text->last = cursor->character;
+        new_line->text->size = aux;
+        cursor->line = new_line;
+        cursor->character = NULL;
+    }
+}
+
 void insertCharacterCursor(CURSOR *cursor,char value)
 {
     //WIP falta a parte de conferir o numero maximo de caracteres pos insercao, para quebrar a linha
@@ -111,6 +169,7 @@ void insertCharacterCursor(CURSOR *cursor,char value)
         cursor->character->next = new_character;
     }
     cursor->character = new_character;
+    cursor->line->text->size = cursor->line->text->size + 1;
 }
 
 //funcoes de remocao
@@ -146,13 +205,31 @@ void moveRight(CURSOR *cursor)
     if(cursor->character->next != NULL)cursor->character = cursor->character->next;
 }
 
-void printLine(CURSOR *cursor)
+void printCursorLine(CURSOR *cursor)
 {
     LINE *line = cursor->line;
+    printf("Cursor line: ");
+    for(CHARACTER *pointer = line->text->first; pointer != NULL; pointer = pointer->next)
+    {
+        printf("%c",pointer->value);
+    }
+    printf("\n");
+}
+
+void printLine(LINE *line)
+{
     printf("Line: ");
     for(CHARACTER *pointer = line->text->first; pointer != NULL; pointer = pointer->next)
     {
         printf("%c",pointer->value);
     }
     printf("\n");
+}
+
+void printAll(DESCRITOR descritor)
+{
+    for(LINE *line = descritor.first; line != NULL; line = line->next)
+    {
+        printLine(line);
+    }
 }

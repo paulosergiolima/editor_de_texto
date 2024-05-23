@@ -11,13 +11,25 @@
 	<conio.h>
 	"structure.h"
 
-1716327194 source:d:\editor_de_texto\main.c
+1716420186 source:d:\editor_de_texto\main.c
 	<conio.h>
 	"structure.h"
 
-1716327144 d:\editor_de_texto\structure.h
+1716328036 d:\editor_de_texto\structure.h
 
-1716327194 source:d:\editor_de_texto\structure.c
+1716420140 source:d:\editor_de_texto\structure.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"structure.h"
+
+1716426426 source:e:\editor_de_texto\main.c
+	<conio.h>
+	"structure.h"
+
+1716426932 e:\editor_de_texto\structure.h
+
+1716428398 source:e:\editor_de_texto\structure.c
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
