@@ -17,9 +17,8 @@
 
 1716327144 d:\editor_de_texto\structure.h
 
-<<<<<<< Updated upstream
-1716327194 source:d:\editor_de_texto\structure.c
-=======
+1716327144 ated upstream
+
 1716420140 source:d:\editor_de_texto\structure.c
 	<stdio.h>
 	<stdlib.h>
@@ -33,9 +32,16 @@
 1716429094 e:\editor_de_texto\structure.h
 
 1716430576 source:e:\editor_de_texto\structure.c
->>>>>>> Stashed changes
+
+1716430576 shed changes
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
 	"structure.h"
+
+1716430676 source:d:\unesp\ed\editor_de_texto\main.c
+	<conio.h>
+	"structure.h"
+
+1716430676 d:\unesp\ed\editor_de_texto\structure.h
 

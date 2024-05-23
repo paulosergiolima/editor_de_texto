@@ -160,7 +160,7 @@ void removeCharacter(CURSOR *cursor)
     }
 }
 
-//funcoes de movimento
+//funcoes de movimento WIP movimento entre linhas
 void moveLeft(CURSOR *cursor)
 {
     if(cursor->character != NULL)cursor->character = cursor->character->previous;
@@ -168,8 +168,16 @@ void moveLeft(CURSOR *cursor)
 
 void moveRight(CURSOR *cursor)
 {
+    //confere se o cursor esta antes do primeiro caractere
     if(cursor->character == NULL)cursor->character = cursor->line->text->first;
+    //confere se o cursor esta entre caracteres
     else if(cursor->character->next != NULL)cursor->character = cursor->character->next;
+    //o cursor esta no ultimo caractere e ha outra linha
+    else if(cursor->line->next != NULL)
+    {
+        cursor->character = NULL;
+        cursor->line = cursor->line->next;
+    }
 }
 
 void printLine(CURSOR *cursor)
