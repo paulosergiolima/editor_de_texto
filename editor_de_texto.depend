@@ -35,3 +35,15 @@
 	<conio.h>
 	"structure.h"
 
+1716467966 source:d:\unesp\ed\editor_de_texto\main.c
+	<conio.h>
+	"structure.h"
+
+1716467966 d:\unesp\ed\editor_de_texto\structure.h
+
+1716470260 source:d:\unesp\ed\editor_de_texto\structure.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	"structure.h"
+
