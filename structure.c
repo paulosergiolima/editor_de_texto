@@ -116,8 +116,12 @@ void insertCharacterCursor(CURSOR *cursor,char value)
 //funcoes de remocao
 void removeCharacter(CURSOR *cursor)
 {
-    if(cursor->line->text->first == NULL) return;//WIP Remove line
-    if(cursor->line->text->last == cursor->character)
+    //confere se a linha esta vazia
+    if(cursor->line->text->first == NULL) return;//WIP Remove a linha
+    //confere se o cursor esta no primeiro caractere
+    else if(cursor->character == NULL) return;//WIP remove a linha e move o resto para cima
+    //confere se o cursor esta no ultimo caractere
+    else if(cursor->line->text->last == cursor->character)
     {
         CHARACTER *aux = cursor->character;
         cursor->character = cursor->character->previous;
@@ -133,6 +137,27 @@ void removeCharacter(CURSOR *cursor)
         }
         free(aux);
     }
+    //remove caractere entre caracteres
+    else
+    {
+        CHARACTER *aux = cursor->character;
+        //confere se o caractere anterior ao cursor e nulo
+        if(cursor->character->previous != NULL)
+        {
+            cursor->character->next->previous = cursor->character->previous;
+            cursor->character->previous->next = cursor->character->next;
+            cursor->character = cursor->character->previous;
+        }
+        else
+        {
+            cursor->character->next->previous = NULL;
+            cursor->line->text->first = cursor->character->next;
+            cursor->character = NULL;
+        }
+
+        free(aux);
+
+    }
 }
 
 //funcoes de movimento
@@ -143,7 +168,8 @@ void moveLeft(CURSOR *cursor)
 
 void moveRight(CURSOR *cursor)
 {
-    if(cursor->character->next != NULL)cursor->character = cursor->character->next;
+    if(cursor->character == NULL)cursor->character = cursor->line->text->first;
+    else if(cursor->character->next != NULL)cursor->character = cursor->character->next;
 }
 
 void printLine(CURSOR *cursor)
