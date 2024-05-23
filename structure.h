@@ -36,13 +36,18 @@ void initializeString(STRING *string);
 void initializeLine(LINE *line);
 void initializeCursor(CURSOR *cursor,LINE *line);
 void initializeFile(DESCRITOR *descritor);
+void initializeDescritor(DESCRITOR *descritor,LINE *line);
 
 //insercao e remocao
+void insertLineCursor(CURSOR *cursor,DESCRITOR *descritor);
 void insertCharacterCursor(CURSOR *cursor,char value);
 void removeCharacter(CURSOR *cursor);
 
 //movimento
 void moveLeft(CURSOR *cursor);
 void moveRight(CURSOR *cursor);
+
+//outros
+void printAll(DESCRITOR descritor);
 
 #endif // STRUCTURE2_H_INCLUDED
