@@ -202,15 +202,23 @@ void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
     //confere se a linha esta vazia
     if(cursor->line->text->first == NULL)
     {
-        //confere se a linha anterior ao cursor e nulo ou nao
+        //confere se a linha anterior ao cursor e existe
         if(cursor->line->previous != NULL)
         {
+            //urgente quando se tem duas linhas vazias isso explode
+            printf("A1\n");
             LINE *aux = cursor->line;
+            printf("A2\n");
             cursor->character = cursor->line->previous->text->last;
+            printf("A3\n");
             cursor->line->previous->next = cursor->line->next;
+            printf("A4\n");
             if(cursor->line->next != NULL)cursor->line->next->previous = cursor->line->previous;
+            printf("A5\n");
             cursor->line = cursor->line->previous;
+            printf("A6\n");
             free(aux);
+            printf("A7\n");
         }
     }
     //confere se o cursor esta antes do primeiro caractere
@@ -236,6 +244,8 @@ void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
             else
             {
                 LINE *aux = cursor->line;
+
+                cursor->line->previous->text->size = cursor->line->previous->text->size + cursor->line->text->size;
 
                 cursor->line->previous->next = cursor->line->next;
                 if(cursor->line->next != NULL)cursor->line->next->previous = cursor->line->previous;
@@ -267,12 +277,14 @@ void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
             cursor->line->text->first = NULL;
         }
         cursor->line->text->last = cursor->character;
+        cursor->line->text->size -= 1;
         free(aux);
     }
     //remove caractere entre caracteres
     else
     {
         CHARACTER *aux = cursor->character;
+        cursor->line->text->size -= 1;
         //confere se o caractere anterior ao cursor e nulo ou nao
         if(cursor->character->previous != NULL)
         {
@@ -406,25 +418,38 @@ void moveRight(CURSOR *cursor)
     }
 }
 
+//outros
+void updateLineNumbers(DESCRITOR descritor)//espero que seja temporario
+{
+    unsigned int number = 1;
+    for(LINE *line = descritor.first; line != NULL; line = line->next)
+    {
+        line->number = number;
+        number++;
+    }
+}
+
 void printCursorLine(CURSOR *cursor)
 {
     LINE *line = cursor->line;
+    printf("%u:",cursor->line->number);//temporario
     if(cursor->character == NULL)printf("|");
     for(CHARACTER *pointer = line->text->first; pointer != NULL; pointer = pointer->next)
     {
         printf("%c",pointer->value);
         if(cursor->character == pointer)printf("|");
     }
-    printf("\n");
+    printf("   size:%u\n",line->text->size);
 }
 
 void printLine(LINE *line)
 {
+    printf("%u:",line->number);//temporario
     for(CHARACTER *pointer = line->text->first; pointer != NULL; pointer = pointer->next)
     {
         printf("%c",pointer->value);
     }
-    printf("\n");
+    printf("   size:%u\n",line->text->size);
 }
 
 void printAll(DESCRITOR descritor,CURSOR *cursor)

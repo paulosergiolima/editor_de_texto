@@ -52,5 +52,6 @@ void moveRight(CURSOR *cursor);
 
 //outros
 void printAll(DESCRITOR descritor,CURSOR *cursor);
+void updateLineNumbers(DESCRITOR descritor);
 
 #endif // STRUCTURE2_H_INCLUDED

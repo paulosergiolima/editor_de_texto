@@ -169,7 +169,8 @@ int main()
         }
         if(flagLine || 1)//temporario
         {
-            system("cls");
+            //system("cls");
+            updateLineNumbers(descritor);
             printAll(descritor,&cursor);
         }
 
