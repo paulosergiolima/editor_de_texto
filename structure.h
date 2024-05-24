@@ -13,11 +13,11 @@ typedef struct{
     CHARACTER *last;
 }STRING;
 
-typedef struct l{
+typedef struct element{
     unsigned int number;
     STRING *text;
-    struct l *next;
-    struct l *previous;
+    struct element *next;
+    struct element *previous;
 }LINE;
 
 typedef struct{
@@ -39,15 +39,18 @@ void initializeFile(DESCRITOR *descritor);
 void initializeDescritor(DESCRITOR *descritor,LINE *line);
 
 //insercao e remocao
+void destroyCharacter(CHARACTER *character);
 void insertLineCursor(CURSOR *cursor,DESCRITOR *descritor);
 void insertCharacterCursor(CURSOR *cursor,char value);
-void removeCharacter(CURSOR *cursor);
+void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor);
 
 //movimento
+void moveUp(CURSOR *cursor);
+void moveDown(CURSOR *cursor);
 void moveLeft(CURSOR *cursor);
 void moveRight(CURSOR *cursor);
 
 //outros
-void printAll(DESCRITOR descritor);
+void printAll(DESCRITOR descritor,CURSOR *cursor);
 
 #endif // STRUCTURE2_H_INCLUDED

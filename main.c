@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include <conio.h>
 #include "structure.h"
 
@@ -24,7 +26,7 @@ int main()
     {
         flagLine = 1;//temporario
         input = getch();
-        printf("numero: %d\n",input);
+        //printf("numero: %d\n",input);//temporario
         /*
             dicionario
             Ctrl + s = 19 //salvar
@@ -75,20 +77,17 @@ int main()
             case 19://Salvar Ctrl + S temporario usando para printar o documento inteiro
                 flagLine = 0;
                 printf("Salvar\n");
-                printAll(descritor);
             break;
             case 8://BackSpace
-                removeCharacter(&cursor);
+                removeCharacterCursor(&cursor,&descritor);
             break;
             case 13://Enter
                 flagLine = 0;
-                printf("Enter\n");
                 insertLineCursor(&cursor,&descritor);
             break;
             case 0:
                 flagLine = 0;//temporario
                 input = getch();
-                printf("segundo: %d\n",input);
                 switch(input)
                 {
                     case 59://F1
@@ -124,9 +123,9 @@ int main()
                 }
             break;
             case -32://"Controle"
-                flagLine = 0;//temporario
+                //flagLine = 0;//temporario
                 input = getch();
-                printf("segundo: %d\n",input);
+                //printf("segundo: %d\n",input);//temporario
                 switch(input)
                 {
                     case 79://End
@@ -145,10 +144,10 @@ int main()
                         printf("Delet\n");
                     break;
                     case 72://Up
-                        printf("Up\n");
+                        moveUp(&cursor);
                     break;
                     case 80://Down
-                        printf("Down\n");
+                        moveDown(&cursor);
                     break;
                     case 75://Left
                         moveLeft(&cursor);
@@ -168,7 +167,12 @@ int main()
                 insertCharacterCursor(&cursor,input);
             break;
         }
-        if(flagLine)printCursorLine(&cursor);
+        if(flagLine || 1)//temporario
+        {
+            system("cls");
+            printAll(descritor,&cursor);
+        }
+
     }
 
 
@@ -176,6 +180,3 @@ int main()
     return 0;
 }
 
-
-void initializeScreen() {
-}
