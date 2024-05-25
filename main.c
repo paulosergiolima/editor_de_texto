@@ -1,5 +1,8 @@
 #include <conio.h>
 #include "structure.h"
+
+//Acho que seria bom fazer uma camera que segue a linha do cursor, no caso a linha do cursor sempre estará no meio (ou um pouco abaixo do meio)
+
 int main()
 {
     LINE lines;
@@ -24,14 +27,15 @@ int main()
         printf("numero: %d\n",input);
         /*
             dicionario
-            Ctrl + s = 19
-            Ctrl + backspace = 127
-            Ctrl + z = 26 por algum motivo invoca um ? ao contário
-
+            Ctrl + s = 19 //salvar
+            Ctrl + backspace = 127 //apagar conteudo da linha (opcional)
+            Ctrl + z = 26 //desfazer
+            Ctrl + r = 18 //refazer
+            Ctrl + n = 14 //novo documento
+            Ctrl + o = 15 //abrir documento
 
 
             delet = -32 e 83
-            insert = -32 e 82
             page up = -32 e 73
             page down = -32 e 81
             home = -32 e 71
@@ -52,11 +56,34 @@ int main()
         */
         switch(input)
         {
+            case 15://Abrir Ctrl + O
+                flagLine = 0;
+                printf("Abrir\n");
+            break;
+            case 14://Novo Ctrl + N
+                flagLine = 0;
+                printf("Novo\n");
+            break;
+            case 18://Refazer Ctrl + R
+                flagLine = 0;
+                printf("Refazer\n");
+            break;
+            case 26://Desfazer Ctrl + Z
+                flagLine = 0;
+                printf("Desfazer\n");
+            break;
+            case 19://Salvar Ctrl + S temporario usando para printar o documento inteiro
+                flagLine = 0;
+                printf("Salvar\n");
+                printAll(descritor);
+            break;
             case 8://BackSpace
                 removeCharacter(&cursor);
             break;
             case 13://Enter
-                printf(" enter");
+                flagLine = 0;
+                printf("Enter\n");
+                insertLineCursor(&cursor,&descritor);
             break;
             case 0:
                 flagLine = 0;//temporario
@@ -102,6 +129,21 @@ int main()
                 printf("segundo: %d\n",input);
                 switch(input)
                 {
+                    case 79://End
+                        printf("End\n");
+                    break;
+                    case 71://Home
+                        printf("Home\n");
+                    break;
+                    case 81://Page down
+                        printf("Page down\n");
+                    break;
+                    case 73://Page up
+                        printf("Page up\n");
+                    break;
+                    case 83://Delet
+                        printf("Delet\n");
+                    break;
                     case 72://Up
                         printf("Up\n");
                     break;
@@ -126,7 +168,7 @@ int main()
                 insertCharacterCursor(&cursor,input);
             break;
         }
-        if(flagLine)printLine(&cursor);
+        if(flagLine)printCursorLine(&cursor);
     }
 
 
