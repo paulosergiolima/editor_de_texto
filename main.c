@@ -141,7 +141,8 @@ int main()
                         printf("Page up\n");
                     break;
                     case 83://Delet
-                        printf("Delet\n");
+                        printf("Delete\n");
+                        deleteCharacterCursor(&cursor,&descritor);
                     break;
                     case 72://Up
                         moveUp(&cursor);
@@ -169,7 +170,7 @@ int main()
         }
         if(flagLine || 1)//temporario
         {
-            //system("cls");
+            system("cls");
             updateLineNumbers(descritor);
             printAll(descritor,&cursor);
         }

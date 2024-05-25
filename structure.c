@@ -199,30 +199,8 @@ void destroyCharacter(CHARACTER *character)
 
 void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
 {
-    //confere se a linha esta vazia
-    if(cursor->line->text->first == NULL)
-    {
-        //confere se a linha anterior ao cursor e existe
-        if(cursor->line->previous != NULL)
-        {
-            //urgente quando se tem duas linhas vazias isso explode
-            printf("A1\n");
-            LINE *aux = cursor->line;
-            printf("A2\n");
-            cursor->character = cursor->line->previous->text->last;
-            printf("A3\n");
-            cursor->line->previous->next = cursor->line->next;
-            printf("A4\n");
-            if(cursor->line->next != NULL)cursor->line->next->previous = cursor->line->previous;
-            printf("A5\n");
-            cursor->line = cursor->line->previous;
-            printf("A6\n");
-            free(aux);
-            printf("A7\n");
-        }
-    }
     //confere se o cursor esta antes do primeiro caractere
-    else if(cursor->character == NULL)
+    if(cursor->character == NULL)
     {
         if(cursor->line->previous != NULL)
         {
@@ -238,7 +216,7 @@ void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
                 cursor->line->previous = cursor->line->previous->previous;
 
                 if(descritor->first == aux)descritor->first = cursor->line;
-
+                free(aux->text);
                 free(aux);
             }
             else
@@ -258,6 +236,7 @@ void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
                 cursor->line->previous->text->last = cursor->line->text->last;
                 cursor->line = cursor->line->previous;
                 aux->text = NULL;
+                free(aux->text);
                 free(aux);
             }
         }
@@ -304,15 +283,40 @@ void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
     }
 }
 
-void deleteCharacterCursor(CURSOR *cursor)
+void deleteCharacterCursor(CURSOR *cursor,DESCRITOR *descritor)
 {
-    //confere se o cursor esta antes do primeiro caractere
-    if(cursor->character == NULL)
-    {
-
-    }
     //confere se o cursor esta no ultimo caractere
-    else if(cursor->line->text->last == cursor->character)
+    if(cursor->line->text->last == cursor->character)
+    {
+        //confere se a proxima linha existe
+        if(cursor->line->next != NULL)
+        {
+            //confere se a proxima linha esta vazia
+            if(cursor->line->next->text->first == NULL)
+            {
+                //temporario, isso explode no free quando tentamos excluir a ultima linha
+                LINE *aux = cursor->line->next;
+                if(cursor->line->next->next != NULL)
+                {
+                    cursor->line->next->next->previous = cursor->line;
+                }
+                cursor->line->next = cursor->line->next->next;
+
+                if(descritor->last == aux)
+                {
+                    descritor->last = cursor->line;
+                }
+                free(aux->text);
+                free(aux);
+            }
+            else
+            {
+
+            }
+        }
+    }
+    //confere se o cursor esta antes do primeiro caractere
+    else if(cursor->character == NULL)
     {
 
     }
@@ -455,6 +459,7 @@ void printLine(LINE *line)
 void printAll(DESCRITOR descritor,CURSOR *cursor)
 {
     printf("Lines:\n");
+    printf("First: %u Last: %u\n",descritor.first->number,descritor.last->number);
     for(LINE *line = descritor.first; line != NULL; line = line->next)
     {
         if(line == cursor->line)

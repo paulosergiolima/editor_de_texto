@@ -43,6 +43,7 @@ void destroyCharacter(CHARACTER *character);
 void insertLineCursor(CURSOR *cursor,DESCRITOR *descritor);
 void insertCharacterCursor(CURSOR *cursor,char value);
 void removeCharacterCursor(CURSOR *cursor,DESCRITOR *descritor);
+void deleteCharacterCursor(CURSOR *cursor,DESCRITOR *descritor);
 
 //movimento
 void moveUp(CURSOR *cursor);
